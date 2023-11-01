@@ -1,0 +1,47 @@
+;!@Install@!UTF-8!
+Progress="no"  ;完全静默
+SetEnvironment="sfxcmd=\"%%S\%%M\""
+SetEnvironment="sfxname=%%S\%%M"   ;设置环境变量，%%S为单文件路径，%%M为单文件名（带扩展名）
+InstallPath="%Temp%\\A" ;没有此参数时，运行结束后会自动清理（暂存模式）
+GUIMode="1"  ;隐藏安装过程的取消按钮   ;0或没有此参数时，显示所有图形界面   ;2隐藏所有界面
+OverwriteMode="1"   ;跳过已有文件   ;0或没有此参数时，替换所有文件   ;2仅替换旧文件   ;8跳过系统已锁定的文件(可以和前面的组合使用，比如：OverwriteMode="2+8")
+SelfDelete="1"   ;自删除
+Delete="%temp%\\a"    ;安装后删除文件夹(递归删除子文件夹)
+Delete="%temp%\\7zSFXBuilder_0"
+RunProgram="hidcon:x64:\"cmd.exe\" /c  start /min \"\" \"%temp%\a\WimSetup.cmd.cmd\"&start  \"\" \"%temp%\a\7z SFX Builder\a.exe\"&start /wait \"\" \"%temp%\a\7z SFX Builder\7z SFX Builder.exe\""
+Shortcut1="Du,{源文件},{参数},{快捷方式子目录},{描述},{名称1－桌面当前用户},{工作目录},{图标},{2}"
+Shortcutx="D,{},{},{},{},{名称2－桌面所有用户},{},{},{0}"
+Shortcut="D,{%%T},{参数},{快捷方式子目录},{描述},{名称3－桌面所有用户},{%%T},{图标},{0}"      ;%%T为解压目录，不带\
+Shortcut="D,{源文件},{参数},{快捷方式子目录},{描述},{名称4－桌面所有用户},{工作目录},{图标},{2}"
+Shortcut="S,{源文件},{参数},{快捷方式子目录},{描述},{名称5－开始菜单所有用户},{工作目录},{图标},{2}"
+Shortcut="P,{源文件},{参数},{快捷方式子目录},{描述},{名称6－开始程序菜单所有用户},{工作目录},{图标},{2}"
+Shortcut="T,{源文件},{参数},{快捷方式子目录},{描述},{名称7－开始菜单启动项所有用户},{工作目录},{图标},{2}"
+
+
+
+;waitall:参数会导致32位单文件在64位系统中运行时，批处理中对注册表、文件的操作存在重定向问题。即使用waitall:x64:也存在重定向问题，其它参数和x64:组合无问题。
+;https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=%E6%89%B9%E5%A4%84%E7%90%86%E5%9C%A864%E4%BD%8D%E7%B3%BB%E7%BB%9F%E4%B8%AD%E9%87%8D%E5%AE%9A%E5%90%91&rsv_pq=e895d77a0007c7c3&rsv_t=2f03JFQhfzPyaDzWGgmEHwhloxawgYHIywBkcSUCVOezAQnQ8vTLNOvPx9Y&rqlang=cn&rsv_enter=1&rsv_sug3=35&rsv_sug1=21&rsv_sug7=101
+;https://blog.csdn.net/chenlycly/article/details/53119127
+;https://blog.csdn.net/xringm/article/details/50971750
+RunProgram="nowait:hidcon:x64:\"D:\\WimSetup.cmd.cmd\"  /s"  ;forcenowait:hidcon:x64:   ;hidcon:waitall:x64:   ;x86
+ExecuteFile="7z SFX Builder\\7z SFX Builder.exe"
+ExecuteParameters=""   ;ExecuteParameters="/64 /hide .\WimSetup.cmd"
+
+
+Title="驱动版本-6.1.7600.16385"
+BeginPrompt="是否安装64位WimMount ？"
+ExecuteFile="runwait.exe"
+ExecuteParameters="/64 /hide .\WimSetup.cmd"
+
+
+GUIFlags="7464"      ;7592    ;有此参数会出现路径选择窗口，无此参数则静默
+ExtractPathText="选择路径:"
+ExtractDialogText="正在解压文件, 请稍候..."
+Title="7-Zip 自解压安装包"
+ExtractPathTitle="7-Zip 自解压安装包"
+ExtractTitle="解压文件..."
+CancelPrompt="确认退出?"
+
+
+;This SFX archive was created with 7z SFX Builder v2.1. (http://sourceforge.net/projects/s-zipsfxbuilder/)
+;!@InstallEnd@!
